@@ -23,6 +23,6 @@ public class BaseGrpcTest {
         .build();
 
 
-    protected static final NifflerCurrencyServiceGrpc.NifflerCurrencyServiceBlockingStub blockingStub =
+    protected static final NifflerCurrencyServiceGrpc.NifflerCurrencyServiceBlockingStub currencyGrpcClient =
         NifflerCurrencyServiceGrpc.newBlockingStub(channel);
 }
