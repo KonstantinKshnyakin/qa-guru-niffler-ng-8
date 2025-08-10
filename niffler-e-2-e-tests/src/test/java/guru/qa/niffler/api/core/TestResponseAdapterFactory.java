@@ -1,7 +1,10 @@
-package guru.qa.niffler.retrofit;
+package guru.qa.niffler.api.core;
 
 import okhttp3.ResponseBody;
-import retrofit2.*;
+import retrofit2.Call;
+import retrofit2.CallAdapter;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

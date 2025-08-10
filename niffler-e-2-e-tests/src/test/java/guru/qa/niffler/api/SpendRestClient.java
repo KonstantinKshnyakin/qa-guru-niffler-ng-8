@@ -1,9 +1,9 @@
 package guru.qa.niffler.api;
 
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.model.CategoryJson;
 import guru.qa.niffler.api.model.CurrencyValues;
 import guru.qa.niffler.api.model.SpendJson;
-import guru.qa.niffler.retrofit.TestResponse;
 import retrofit2.http.*;
 
 import javax.annotation.Nonnull;
@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public interface SpendEndpointClient {
+public interface SpendRestClient {
 
     @GET("internal/spends/{id}")
     @Nonnull

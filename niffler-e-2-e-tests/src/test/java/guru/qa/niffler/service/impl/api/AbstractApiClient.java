@@ -1,6 +1,6 @@
 package guru.qa.niffler.service.impl.api;
 
-import guru.qa.niffler.retrofit.TestResponse;
+import guru.qa.niffler.api.core.TestResponse;
 import lombok.SneakyThrows;
 
 import javax.annotation.Nonnull;

@@ -1,13 +1,13 @@
 package guru.qa.niffler.api;
 
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.model.OAuthTokenResponse;
-import guru.qa.niffler.retrofit.TestResponse;
 import retrofit2.http.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public interface AuthEndpointClient {
+public interface AuthRestClient {
 
 
     @GET("login")

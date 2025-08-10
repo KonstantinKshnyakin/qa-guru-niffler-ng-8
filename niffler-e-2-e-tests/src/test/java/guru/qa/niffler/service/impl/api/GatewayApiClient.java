@@ -1,11 +1,11 @@
 package guru.qa.niffler.service.impl.api;
 
 import guru.qa.niffler.api.ApiClients;
-import guru.qa.niffler.api.GatewayEndpointClient;
+import guru.qa.niffler.api.GatewayRestClient;
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.model.FriendJson;
 import guru.qa.niffler.api.model.UserdataUserJson;
 import guru.qa.niffler.jupiter.extension.ApiLoginExtension;
-import guru.qa.niffler.retrofit.TestResponse;
 import io.qameta.allure.Step;
 
 import javax.annotation.Nonnull;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GatewayApiClient extends AbstractApiClient {
 
-    private final GatewayEndpointClient gatewayClient = ApiClients.gatewayClient();
+    private final GatewayRestClient gatewayClient = ApiClients.gatewayClient();
 
     private GatewayApiClient() {
     }

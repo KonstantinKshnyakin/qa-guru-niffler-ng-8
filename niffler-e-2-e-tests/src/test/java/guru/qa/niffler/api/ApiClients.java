@@ -2,9 +2,9 @@ package guru.qa.niffler.api;
 
 import guru.qa.niffler.api.core.CodeInterceptor;
 import guru.qa.niffler.api.core.SoapConvertorFactory;
+import guru.qa.niffler.api.core.TestResponseAdapterFactory;
 import guru.qa.niffler.api.core.TradeSafeCookieStore;
 import guru.qa.niffler.config.Config;
-import guru.qa.niffler.retrofit.TestResponseAdapterFactory;
 import io.qameta.allure.okhttp3.AllureOkHttp3;
 import lombok.experimental.UtilityClass;
 import okhttp3.Interceptor;
@@ -26,22 +26,22 @@ import java.net.CookiePolicy;
 public class ApiClients {
 
     private static final Config CFG = Config.getInstance();
-    private static final SpendEndpointClient SPEND_CLIENT = buildClient(CFG.spendUrl(), SpendEndpointClient.class);
-    private static final UserdataEndpointClient USERDATA_CLIENT = buildClient(CFG.userdataUrl(), UserdataEndpointClient.class);
-    private static final GhEndpointClient GH_CLIENT = buildClient(CFG.ghUrl(), GhEndpointClient.class);
-    private static final GatewayEndpointClient GATEWAY_CLIENT = buildClient(CFG.gatewayUrl(), GatewayEndpointClient.class);
-    private static final AuthEndpointClient AUTH_CLIENT = buildClient(
-        CFG.authUrl(), true, AuthEndpointClient.class, new CodeInterceptor()
+    private static final SpendRestClient SPEND_CLIENT = buildClient(CFG.spendUrl(), SpendRestClient.class);
+    private static final UserdataRestClient USERDATA_CLIENT = buildClient(CFG.userdataUrl(), UserdataRestClient.class);
+    private static final GhRestClient GH_CLIENT = buildClient(CFG.ghUrl(), GhRestClient.class);
+    private static final GatewayRestClient GATEWAY_CLIENT = buildClient(CFG.gatewayUrl(), GatewayRestClient.class);
+    private static final AuthRestClient AUTH_CLIENT = buildClient(
+        CFG.authUrl(), true, AuthRestClient.class, new CodeInterceptor()
     );
     private static final UserdataSoapClient USERDATA_SOAP_CLIENT = buildClient(
         CFG.userdataUrl(), UserdataSoapClient.class, SoapConvertorFactory.create("niffler-userdata")
     );
 
-    public static @Nonnull SpendEndpointClient spendClient() {
+    public static @Nonnull SpendRestClient spendClient() {
         return SPEND_CLIENT;
     }
 
-    public static @Nonnull UserdataEndpointClient userdataClient() {
+    public static @Nonnull UserdataRestClient userdataClient() {
         return USERDATA_CLIENT;
     }
 
@@ -49,15 +49,15 @@ public class ApiClients {
         return USERDATA_SOAP_CLIENT;
     }
 
-    public static @Nonnull GhEndpointClient ghClient() {
+    public static @Nonnull GhRestClient ghClient() {
         return GH_CLIENT;
     }
 
-    public static @Nonnull AuthEndpointClient authClient() {
+    public static @Nonnull AuthRestClient authClient() {
         return AUTH_CLIENT;
     }
 
-    public static @Nonnull GatewayEndpointClient gatewayClient() {
+    public static @Nonnull GatewayRestClient gatewayClient() {
         return GATEWAY_CLIENT;
     }
 

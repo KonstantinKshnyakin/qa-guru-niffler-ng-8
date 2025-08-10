@@ -1,7 +1,7 @@
 package guru.qa.niffler.api;
 
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.model.*;
-import guru.qa.niffler.retrofit.TestResponse;
 import guru.qa.niffler.web.model.DataFilterValues;
 import retrofit2.http.*;
 
@@ -11,7 +11,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public interface GatewayEndpointClient {
+public interface GatewayRestClient {
 
     @GET("api/categories/all")
     TestResponse<List<CategoryJson>, Void> allCategories(@Header("Authorization") String bearerToken);

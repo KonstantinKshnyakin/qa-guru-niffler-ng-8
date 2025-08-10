@@ -1,8 +1,8 @@
 package guru.qa.niffler.api;
 
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.model.ErrorJson;
 import guru.qa.niffler.api.model.UserdataUserJson;
-import guru.qa.niffler.retrofit.TestResponse;
 import retrofit2.http.*;
 
 import javax.annotation.Nonnull;
@@ -11,7 +11,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public interface UserdataEndpointClient {
+public interface UserdataRestClient {
 
     @GET("internal/users/current")
     @Nonnull

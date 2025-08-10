@@ -1,4 +1,4 @@
-package guru.qa.niffler.retrofit;
+package guru.qa.niffler.api.core;
 
 
 import lombok.Value;

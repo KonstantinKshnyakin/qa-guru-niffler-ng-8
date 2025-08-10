@@ -1,7 +1,7 @@
 package guru.qa.niffler.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import guru.qa.niffler.retrofit.TestResponse;
+import guru.qa.niffler.api.core.TestResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public interface GhEndpointClient {
+public interface GhRestClient {
 
   @GET("repos/KonstantinKshnyakin/qa-guru-niffler-ng-8/issues/{issue_number}")
   @Headers({

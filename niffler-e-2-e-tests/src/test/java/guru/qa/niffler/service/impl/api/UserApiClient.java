@@ -2,13 +2,13 @@ package guru.qa.niffler.service.impl.api;
 
 import com.google.common.base.Stopwatch;
 import guru.qa.niffler.api.ApiClients;
-import guru.qa.niffler.api.AuthEndpointClient;
-import guru.qa.niffler.api.UserdataEndpointClient;
+import guru.qa.niffler.api.AuthRestClient;
+import guru.qa.niffler.api.UserdataRestClient;
+import guru.qa.niffler.api.core.TestResponse;
 import guru.qa.niffler.api.core.TradeSafeCookieStore;
 import guru.qa.niffler.api.model.ErrorJson;
 import guru.qa.niffler.api.model.UserParts;
 import guru.qa.niffler.api.model.UserdataUserJson;
-import guru.qa.niffler.retrofit.TestResponse;
 import guru.qa.niffler.service.UserClient;
 import guru.qa.niffler.util.RandomDataUtils;
 import io.qameta.allure.Step;
@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 @ParametersAreNonnullByDefault
 public class UserApiClient extends AbstractApiClient implements UserClient {
 
-    private final AuthEndpointClient authClient = ApiClients.authClient();
-    private final UserdataEndpointClient userdataClient = ApiClients.userdataClient();
+    private final AuthRestClient authClient = ApiClients.authClient();
+    private final UserdataRestClient userdataClient = ApiClients.userdataClient();
 
     private UserApiClient() {
     }
