@@ -1,6 +1,7 @@
 package guru.qa.niffler.api;
 
 import guru.qa.niffler.api.core.CodeInterceptor;
+import guru.qa.niffler.api.core.SoapConvertorFactory;
 import guru.qa.niffler.api.core.TradeSafeCookieStore;
 import guru.qa.niffler.config.Config;
 import guru.qa.niffler.retrofit.TestResponseAdapterFactory;
@@ -17,6 +18,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
@@ -31,6 +33,9 @@ public class ApiClients {
     private static final AuthEndpointClient AUTH_CLIENT = buildClient(
         CFG.authUrl(), true, AuthEndpointClient.class, new CodeInterceptor()
     );
+    private static final UserdataSoapClient USERDATA_SOAP_CLIENT = buildClient(
+        CFG.userdataUrl(), UserdataSoapClient.class, SoapConvertorFactory.create("niffler-userdata")
+    );
 
     public static @Nonnull SpendEndpointClient spendClient() {
         return SPEND_CLIENT;
@@ -38,6 +43,10 @@ public class ApiClients {
 
     public static @Nonnull UserdataEndpointClient userdataClient() {
         return USERDATA_CLIENT;
+    }
+
+    public static @Nonnull UserdataSoapClient userdataSoapClient() {
+        return USERDATA_SOAP_CLIENT;
     }
 
     public static @Nonnull GhEndpointClient ghClient() {
@@ -66,6 +75,21 @@ public class ApiClients {
             JacksonConverterFactory.create(),
             TestResponseAdapterFactory.create(),
             followingRedirect,
+            HttpLoggingInterceptor.Level.BODY,
+            interceptors
+        );
+    }
+
+    private static <T> @Nonnull T buildClient(@Nonnull String baseUrl,
+                                              @Nonnull Class<T> apiClass,
+                                              @Nonnull Converter.Factory converterFactory,
+                                              @Nonnull Interceptor... interceptors) {
+        return buildClient(
+            baseUrl,
+            apiClass,
+            converterFactory,
+            null,
+            false,
             HttpLoggingInterceptor.Level.BODY,
             interceptors
         );
@@ -102,18 +126,19 @@ public class ApiClients {
     private static <T> @Nonnull T buildClient(@Nonnull String baseUrl,
                                               @Nonnull Class<T> apiClass,
                                               @Nonnull Converter.Factory converterFactory,
-                                              @Nonnull CallAdapter.Factory adapterFactory,
+                                              @Nullable CallAdapter.Factory adapterFactory,
                                               boolean followingRedirect,
                                               @Nonnull HttpLoggingInterceptor.Level logLevel,
                                               @Nonnull Interceptor... interceptors
     ) {
         OkHttpClient okHttpClient = buildOkHttpClient(followingRedirect, logLevel, interceptors);
-        return new Retrofit.Builder()
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
-            .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(adapterFactory)
-            .build()
-            .create(apiClass);
+            .addConverterFactory(converterFactory);
+        if (adapterFactory != null) {
+            retrofitBuilder.addCallAdapterFactory(adapterFactory);
+        }
+        return retrofitBuilder.build().create(apiClass);
     }
 }
