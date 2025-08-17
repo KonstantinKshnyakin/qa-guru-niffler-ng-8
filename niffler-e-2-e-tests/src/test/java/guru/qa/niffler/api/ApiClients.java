@@ -1,9 +1,6 @@
 package guru.qa.niffler.api;
 
-import guru.qa.niffler.api.core.CodeInterceptor;
-import guru.qa.niffler.api.core.SoapConvertorFactory;
-import guru.qa.niffler.api.core.TestResponseAdapterFactory;
-import guru.qa.niffler.api.core.TradeSafeCookieStore;
+import guru.qa.niffler.api.core.*;
 import guru.qa.niffler.config.Config;
 import io.qameta.allure.okhttp3.AllureOkHttp3;
 import lombok.experimental.UtilityClass;
@@ -33,8 +30,8 @@ public class ApiClients {
     private static final AuthRestClient AUTH_CLIENT = buildClient(
         CFG.authUrl(), true, AuthRestClient.class, new CodeInterceptor()
     );
-    private static final UserdataSoapClient USERDATA_SOAP_CLIENT = buildClient(
-        CFG.userdataUrl(), UserdataSoapClient.class, SoapConvertorFactory.create("niffler-userdata")
+    private static final UserdataSoapIClient USERDATA_SOAP_CLIENT = buildSoapClient(
+        CFG.userdataUrl(), UserdataSoapIClient.class, SoapConvertorFactory.create("niffler-userdata")
     );
 
     public static @Nonnull SpendRestClient spendClient() {
@@ -45,7 +42,7 @@ public class ApiClients {
         return USERDATA_CLIENT;
     }
 
-    public static @Nonnull UserdataSoapClient userdataSoapClient() {
+    public static @Nonnull UserdataSoapIClient userdataSoapClient() {
         return USERDATA_SOAP_CLIENT;
     }
 
@@ -80,15 +77,15 @@ public class ApiClients {
         );
     }
 
-    private static <T> @Nonnull T buildClient(@Nonnull String baseUrl,
-                                              @Nonnull Class<T> apiClass,
-                                              @Nonnull Converter.Factory converterFactory,
-                                              @Nonnull Interceptor... interceptors) {
+    private static <T> @Nonnull T buildSoapClient(@Nonnull String baseUrl,
+                                                  @Nonnull Class<T> apiClass,
+                                                  @Nonnull Converter.Factory converterFactory,
+                                                  @Nonnull Interceptor... interceptors) {
         return buildClient(
             baseUrl,
             apiClass,
             converterFactory,
-            null,
+            ResponseCallAdapterFactory.create(),
             false,
             HttpLoggingInterceptor.Level.BODY,
             interceptors
