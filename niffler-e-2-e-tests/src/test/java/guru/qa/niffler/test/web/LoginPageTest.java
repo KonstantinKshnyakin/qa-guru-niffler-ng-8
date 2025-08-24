@@ -32,7 +32,7 @@ public class LoginPageTest extends BaseWebTest {
     private static final NonStaticBrowsersExtension browserExtension = new NonStaticBrowsersExtension();
 
     @Test
-    @User(username = "user")
+    @User
     void mainPageShouldBeDisplayedAfterSuccessLogin(UserParts user) {
         SelenideDriver selenideDriver = new SelenideDriver(Sc);
         browserExtension.drivers().add(selenideDriver);

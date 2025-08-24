@@ -22,10 +22,10 @@ public class RegisterPageTest extends BaseWebTest {
     @Test
     @User
     void shouldNotRegisterUserWithExitingUsername(UserParts user) {
-        String username = user.getPassword();
-        String password2 = genPassword();
+        String username = user.getUsername();
+        String password = genPassword();
         openRegisterPage()
-            .registerUserError(username, password2, password2)
+            .registerUserError(username, password, password)
             .checkUsernameError("Username `%s` already exists".formatted(username));
     }
 

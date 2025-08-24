@@ -29,5 +29,6 @@ bash ./gradlew clean
 bash ./gradlew jibDockerBuild -x :niffler-e-2-e-tests:test
 
 docker pull selenoid/vnc_chrome:127.0
+docker pull selenoid/vnc_firefox:125.0
 docker compose up -d
 docker ps -a

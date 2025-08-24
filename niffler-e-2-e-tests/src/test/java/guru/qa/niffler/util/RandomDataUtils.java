@@ -3,6 +3,7 @@ package guru.qa.niffler.util;
 import com.github.javafaker.Faker;
 import guru.qa.niffler.api.model.*;
 import lombok.NonNull;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -24,7 +25,8 @@ public final class RandomDataUtils {
     }
 
     public static @NonNull String genUsername() {
-        return USERNAME_PREFIX + FAKER.funnyName().name();
+        String randomIndex = RandomStringUtils.randomAlphabetic(4);
+        return USERNAME_PREFIX + randomIndex + FAKER.funnyName().name();
     }
 
     public static @NonNull String genCategoryName() {

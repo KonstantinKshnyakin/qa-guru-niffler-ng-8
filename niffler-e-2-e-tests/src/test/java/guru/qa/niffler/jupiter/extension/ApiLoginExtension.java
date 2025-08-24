@@ -51,7 +51,7 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
 
     @Override
 
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), ApiLogin.class)
             .ifPresent(annotation -> {
                 UserParts user = resolveUser(annotation);

@@ -16,7 +16,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
     private final ElementsCollection categoryList = $$(".MuiGrid-grid-xs-12 > .MuiBox-root");
     private final SelenideElement avatarImageInput = $("input#image__input");
     private final SelenideElement avatarImage = $(".MuiBox-root > .MuiAvatar-root");
-    private final SelenideElement saveChangesBtn = $("button#\\:rb\\:");
+    private final SelenideElement saveChangesBtn = $("button#\\:r5\\:");
     private final SelenideElement nameInput = $("#name");
 
     @Step("Кликаем по тоглу 'Show archived'")

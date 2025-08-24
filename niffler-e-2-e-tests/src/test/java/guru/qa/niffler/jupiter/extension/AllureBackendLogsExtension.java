@@ -18,23 +18,25 @@ public class AllureBackendLogsExtension implements SuiteExtension {
     @SneakyThrows
     @Override
     public void afterSuite() {
-        final AllureLifecycle allureLifecycle = Allure.getLifecycle();
-        final String caseId = UUID.randomUUID().toString();
-        allureLifecycle.scheduleTestCase(new TestResult().setUuid(caseId).setName(caseName));
-        allureLifecycle.startTestCase(caseId);
-        SERVICE_NAMES.forEach(serviceName -> {
-            addLogs(allureLifecycle, serviceName);
-        });
-        allureLifecycle.addAttachment(
-            "Niffler-auth log",
-            "text/html",
-            ".log",
-            Files.newInputStream(
-                Path.of("./logs/niffler-auth/app.log")
-            )
-        );
-        allureLifecycle.stopTestCase(caseId);
-        allureLifecycle.writeTestCase(caseId);
+        if (!"docker".equals(System.getProperty("test.env"))) {
+            final AllureLifecycle allureLifecycle = Allure.getLifecycle();
+            final String caseId = UUID.randomUUID().toString();
+            allureLifecycle.scheduleTestCase(new TestResult().setUuid(caseId).setName(caseName));
+            allureLifecycle.startTestCase(caseId);
+            SERVICE_NAMES.forEach(serviceName -> {
+                addLogs(allureLifecycle, serviceName);
+            });
+            allureLifecycle.addAttachment(
+                "Niffler-auth log",
+                "text/html",
+                ".log",
+                Files.newInputStream(
+                    Path.of("./logs/niffler-auth/app.log")
+                )
+            );
+            allureLifecycle.stopTestCase(caseId);
+            allureLifecycle.writeTestCase(caseId);
+        }
     }
 
     @SneakyThrows

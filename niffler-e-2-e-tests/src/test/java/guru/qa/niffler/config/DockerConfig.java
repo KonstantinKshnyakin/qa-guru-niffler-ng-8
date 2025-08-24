@@ -9,52 +9,52 @@ enum DockerConfig implements Config {
 
     @Override
     public @Nonnull String frontUrl() {
-        return "";
+        return "http://frontend.niffler.dc/";
     }
 
     @Override
     public @Nonnull String spendUrl() {
-        return "";
+        return "http://spend.niffler.dc:8093/";
     }
 
     @Override
     public @Nonnull String spendJdbcUrl() {
-        return "";
+        return "jdbc:postgresql://niffler-all-db:5432/niffler-spend";
     }
 
     @Override
     public @Nonnull String authUrl() {
-        return "";
+        return "http://auth.niffler.dc:9000/";
     }
 
     @Override
     public @Nonnull String authJdbcUrl() {
-        return "";
+        return "jdbc:postgresql://niffler-all-db:5432/niffler-auth";
     }
 
     @Override
     public @Nonnull String gatewayUrl() {
-        return "";
+        return "http://gateway.niffler.dc:8090/";
     }
 
     @Override
     public @Nonnull String userdataUrl() {
-        return "";
+        return "http://userdata.niffler.dc:8089/";
     }
 
     @Override
     public @Nonnull String userdataJdbcUrl() {
-        return "";
+        return "jdbc:postgresql://niffler-all-db:5432/niffler-userdata";
     }
 
     @Override
     public @Nonnull String currencyJdbcUrl() {
-        return "";
+        return "jdbc:postgresql://niffler-all-db:5432/niffler-currency";
     }
 
-
+    @NotNull
     @Override
-    public @NotNull String currencyGrpcAddress() {
-        return "";
+    public String currencyGrpcAddress() {
+        return "currency.niffler.dc";
     }
 }
