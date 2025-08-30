@@ -27,7 +27,7 @@ public enum TradeSafeCookieStore implements CookieStore {
             .filter(c -> c.getName().equals(name))
             .map(HttpCookie::getValue)
             .findFirst()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalStateException("cookieValue not present: " + name));
     }
 
     public String xsrfValue() {

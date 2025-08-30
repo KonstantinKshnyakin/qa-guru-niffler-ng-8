@@ -45,6 +45,12 @@ public interface Config {
   String currencyGrpcAddress();
 
   @Nonnull
+  String selenoidUrl();
+
+  @Nonnull
+  String allureServerUrl();
+
+  @Nonnull
   default Integer currencyGrpcPort() {
     return 8092;
   }

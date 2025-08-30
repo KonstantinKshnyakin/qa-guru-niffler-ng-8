@@ -1,7 +1,6 @@
 package guru.qa.niffler.jupiter.extension;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import guru.qa.niffler.api.core.TradeSafeCookieStore;
 import guru.qa.niffler.api.model.CategoryJson;
 import guru.qa.niffler.api.model.SpendJson;
@@ -18,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.InvalidCookieDomainException;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Parameter;
@@ -35,14 +35,14 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
     private static final SpendApiClient spendClient = SpendApiClient.client();
     private static final UserApiClient userClient = UserApiClient.client();
     private static final Config CFG = Config.getInstance();
-    private final boolean setupBrother;
+    private final boolean setupBrowser;
 
-    public ApiLoginExtension(boolean setupBrother) {
-        this.setupBrother = setupBrother;
+    public ApiLoginExtension(boolean setupBrowser) {
+        this.setupBrowser = setupBrowser;
     }
 
     public ApiLoginExtension() {
-        this.setupBrother = true;
+        this.setupBrowser = true;
     }
 
     public static ApiLoginExtension restApiLOGinExtension() {
@@ -57,12 +57,17 @@ public class ApiLoginExtension implements BeforeEachCallback, ParameterResolver 
                 UserParts user = resolveUser(annotation);
                 String token = authClient.successLoginAdnGetToken(user);
                 setToken(token);
-                if (setupBrother) {
+                if (setupBrowser) {
                     Selenide.open(CFG.frontUrl());
                     Selenide.localStorage().setItem("id_token", getToken());
-                    WebDriverRunner.getWebDriver().manage().addCookie(
-                        getJSessionIdCookie()
-                    );
+                    Selenide.Wait().until(webDriver -> {
+                        try {
+                            webDriver.manage().addCookie(getJSessionIdCookie());
+                            return true;
+                        } catch (InvalidCookieDomainException e) {
+                            return false;
+                        }
+                    });
                 }
             });
     }

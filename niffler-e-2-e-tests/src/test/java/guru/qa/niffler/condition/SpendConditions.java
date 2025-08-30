@@ -41,17 +41,18 @@ public class SpendConditions {
                 }
 
                 boolean isPassed = true;
-                List<SpendPart> actSpends = new ArrayList<>();
-                for (int i = 0; i < actElements.size(); i++) {
-                    SpendPart actSpend = map(actElements.get(i).findElements(By.cssSelector("td")));
-                    SpendPart expSpend = map(expSpends.get(i));
-                    actSpends.add(actSpend);
-                    if (isPassed) {
-                        isPassed = expSpend.equals(actSpend);
-                    }
+                List<SpendPart> actualSpends = new ArrayList<>();
+                List<SpendPart> expectedSpends = expSpends.stream()
+                    .map(SpendConditions::map)
+                    .sorted(Comparator.comparingInt(SpendPart::hashCode))
+                    .toList();
+                for (WebElement actElement : actElements) {
+                    SpendPart actSpend = map(actElement.findElements(By.cssSelector("td")));
+                    actualSpends.add(actSpend);
                 }
-                if (!isPassed) {
-                    String actSpendsStr = actSpends.toString();
+                actualSpends.sort(Comparator.comparingInt(SpendPart::hashCode));
+                if (!expectedSpends.equals(actualSpends)) {
+                    String actSpendsStr = actualSpends.toString();
                     String message = "List colors mismatch (expected: \"%s\", actual: \"%s\")".formatted(expSpendsStr, actSpendsStr);
                     return rejected(message, actSpendsStr);
                 }

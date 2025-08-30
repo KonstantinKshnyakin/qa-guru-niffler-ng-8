@@ -57,4 +57,16 @@ enum DockerConfig implements Config {
     public String currencyGrpcAddress() {
         return "currency.niffler.dc";
     }
+
+    @NotNull
+    @Override
+    public String selenoidUrl() {
+        return "http://selenoid:4444/wd/hub";
+    }
+
+    @NotNull
+    @Override
+    public String allureServerUrl() {
+        return "http://allure:5050/";
+    }
 }
