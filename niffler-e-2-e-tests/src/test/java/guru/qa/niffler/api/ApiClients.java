@@ -33,6 +33,9 @@ public class ApiClients {
     private static final UserdataSoapIClient USERDATA_SOAP_CLIENT = buildSoapClient(
         CFG.userdataUrl(), UserdataSoapIClient.class, SoapConvertorFactory.create("niffler-userdata")
     );
+    private static final AllureServerRestClient ALLURE_SERVER_CLIENT = buildClient(
+        CFG.allureServerUrl(), AllureServerRestClient.class, ResponseCallAdapterFactory.create()
+    );
 
     public static @Nonnull SpendRestClient spendClient() {
         return SPEND_CLIENT;
@@ -57,6 +60,11 @@ public class ApiClients {
     public static @Nonnull GatewayRestClient gatewayClient() {
         return GATEWAY_CLIENT;
     }
+
+    public static @Nonnull AllureServerRestClient allureServerClient() {
+        return ALLURE_SERVER_CLIENT;
+    }
+
 
     private static <T> @Nonnull T buildClient(@Nonnull String baseUrl, @Nonnull Class<T> apiClass) {
         return buildClient(baseUrl, false, apiClass);
@@ -86,6 +94,21 @@ public class ApiClients {
             apiClass,
             converterFactory,
             ResponseCallAdapterFactory.create(),
+            false,
+            HttpLoggingInterceptor.Level.BODY,
+            interceptors
+        );
+    }
+
+    private static <T> @Nonnull T buildClient(@Nonnull String baseUrl,
+                                              @Nonnull Class<T> apiClass,
+                                              @Nullable CallAdapter.Factory adapterFactory,
+                                              @Nonnull Interceptor... interceptors) {
+        return buildClient(
+            baseUrl,
+            apiClass,
+            JacksonConverterFactory.create(),
+            adapterFactory,
             false,
             HttpLoggingInterceptor.Level.BODY,
             interceptors

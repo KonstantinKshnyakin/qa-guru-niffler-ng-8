@@ -26,6 +26,7 @@ public class LoginPageTest extends BaseWebTest {
     public static final SelenideConfig Sc = new SelenideConfig()
         .browser("chrome")
         .pageLoadStrategy("eager")
+        .remote(CFG.selenoidUrl())
         .timeout(5000L);
 
     @RegisterExtension

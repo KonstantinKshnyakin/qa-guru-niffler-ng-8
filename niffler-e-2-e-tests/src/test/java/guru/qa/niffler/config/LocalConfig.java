@@ -9,7 +9,7 @@ enum LocalConfig implements Config {
 
   @Override
   public @Nonnull String frontUrl() {
-    return "http://127.0.0.1:3000/";
+    return "http://frontend.niffler.dc/";
   }
 
   @Override
@@ -24,7 +24,7 @@ enum LocalConfig implements Config {
 
   @Override
   public @Nonnull String authUrl() {
-    return "http://127.0.0.1:9000/";
+    return "http://auth.niffler.dc:9000/";
   }
 
   @Override
@@ -34,7 +34,7 @@ enum LocalConfig implements Config {
 
   @Override
   public @Nonnull String gatewayUrl() {
-    return "http://127.0.0.1:8090/";
+    return "http://gateway.niffler.dc:8090/";
   }
 
   @Override
@@ -56,5 +56,17 @@ enum LocalConfig implements Config {
   @Override
   public String currencyGrpcAddress() {
     return "127.0.0.1";
+  }
+
+  @NotNull
+  @Override
+  public String selenoidUrl() {
+    return "http://127.0.0.1:4444/wd/hub";
+  }
+
+  @NotNull
+  @Override
+  public String allureServerUrl() {
+    return "http://127.0.0.1:5050/";
   }
 }

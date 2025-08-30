@@ -21,9 +21,10 @@
   "firefox": {
     "default": "125.0",
     "versions": {
-      "127.0": {
+      "125.0": {
         "image": "selenoid/vnc_firefox:125.0",
         "port": "4444",
+        "path": "/wd/hub",
         "env": [
           "TZ=Europe/Moscow"
         ]

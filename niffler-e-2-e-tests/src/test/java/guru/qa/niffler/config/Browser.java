@@ -11,6 +11,7 @@ public enum Browser {
             return new SelenideConfig()
                 .browser("chrome")
                 .pageLoadStrategy("eager")
+                .remote(Config.getInstance().selenoidUrl())
                 .timeout(5000L);
         }
     },
@@ -19,6 +20,7 @@ public enum Browser {
             return new SelenideConfig()
                 .browser("firefox")
                 .pageLoadStrategy("eager")
+                .remote(Config.getInstance().selenoidUrl())
                 .timeout(5000L);
         }
     };
